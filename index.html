@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Dia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-dark: radial-gradient(circle at top,#2b0030,#09010d 60%);
+  --bg-light: linear-gradient(135deg,#ffd1dc,#ffb6c1);
+  --text-dark:#fff;
+  --text-light:#222;
+}
+
+/* RESET */
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--bg-dark);
+  color:var(--text-dark);
+  overflow-x:hidden;
+  transition:.4s;
+}
+
+body.light{
+  background:var(--bg-light);
+  color:var(--text-light);
+}
+
+/* TOGGLE */
+.toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  background:#ff4f81;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:.8rem;
+  cursor:pointer;
+  z-index:100;
+}
+
+/* PAGE */
+.page{
+  display:none;
+  min-height:100vh;
+  padding:24px;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  flex-direction:column;
+}
+
+.page.active{
+  display:flex;
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.page > *{
+  margin-bottom:14px;
+}
+
+h1{
+  font-size:2rem;
+  font-weight:600;
+  line-height:1.3;
+}
+
+p{
+  max-width:420px;
+  line-height:1.7;
+  opacity:.9;
+}
+
+/* BUTTON */
+button{
+  padding:14px 32px;
+  border-radius:30px;
+  border:none;
+  font-size:1rem;
+  cursor:pointer;
+  transition:.15s;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.yes{
+  background:#ff4f81;
+  color:#fff;
+  box-shadow:0 0 25px rgba(255,79,129,.6);
+}
+
+.yes:hover{
+  box-shadow:0 0 35px rgba(255,79,129,.8);
+}
+
+.no{
+  background:#fff;
+  color:#ff4f81;
+  position:absolute;
+  font-weight:500;
+}
+
+/* INPUT */
+input,select{
+  padding:12px;
+  border-radius:15px;
+  border:none;
+  width:240px;
+  font-size:.95rem;
+  outline:none;
+}
+
+/* STORY PAGE */
+.story-text{
+  max-width:420px;
+  font-size:1rem;
+  line-height:1.8;
+  opacity:.9;
+}
+
+.story-sign{
+  margin-top:4px;
+  font-weight:500;
+  opacity:.8;
+}
+
+/* DESKTOP */
+@media(min-width:768px){
+  h1{font-size:2.6rem}
+}
+
+/* HEART */
+.heart{
+  position:fixed;
+  font-size:18px;
+  pointer-events:none;
+  animation:fade 1s linear forwards;
+}
+
+@keyframes fade{
+  to{opacity:0;transform:translateY(-30px) scale(1.8)}
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  font-size:20px;
+  animation:conf 1.5s linear forwards;
+}
+
+@keyframes conf{
+  to{transform:translateY(120vh) rotate(360deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<button class="toggle" onclick="toggleMode()">🌙 / ☀️</button>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="about-you.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <h1 id="type1"></h1>
+  <p id="type2"></p>
+  <button class="yes" onclick="yesAction()">Yes 💖</button>
+  <button class="no" id="noBtn">No</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <h1>Choose Our Moment ✨</h1>
+  <input type="date">
+  <select>
+    <option>Late Night Walk 🌙</option>
+    <option>Movie Night 🎬</option>
+    <option>Deep Talk ☕</option>
+  </select>
+  <button class="yes" onclick="goTo(3)">Continue</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <h1>Our Story Begins 💫</h1>
+
+  <p class="story-text">
+    It’s not about perfect moments,<br>
+    or grand promises.<br><br>
+
+    It’s about choosing each other,<br>
+    even on the ordinary days.
+  </p>
+
+  <p class="story-sign">Kamu</p>
+
+  <button class="yes" onclick="goTo(4)">Finish</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <h1 id="typeEnd"></h1>
+  <p id="typeEnd2"></p>
+  <p><b> Kamu</b></p>
+</div>
+
+<script>
+/* TYPEWRITER */
+function typeText(el,text,delay=40){
+  let i=0;
+  el.innerHTML="";
+  const interval=setInterval(()=>{
+    el.innerHTML+=text[i];
+    i++;
+    if(i>=text.length) clearInterval(interval);
+  },delay);
+}
+
+/* INIT */
+typeText(
+  document.getElementById('type1'),
+  "Dia, will you be my girlfriend?"
+);
+setTimeout(()=>{
+  typeText(
+    document.getElementById('type2'),
+    "From Kamu someone who wants to stay."
+  );
+},900);
+
+/* NAV */
+function goTo(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+
+  if(n===4){
+    typeText(
+      document.getElementById('typeEnd'),
+      "One last thing 🤍"
+    );
+    setTimeout(()=>{
+      typeText(
+        document.getElementById('typeEnd2'),
+        "If you’re reading this, it means you chose us.\n\nAnd from this moment on,\nI choose you every day.",
+        35
+      );
+    },800);
+  }
+}
+
+/* YES */
+let confettiDone=false;
+function yesAction(){
+  document.getElementById('music').play();
+  if(!confettiDone){
+    confetti();
+    confettiDone=true;
+  }
+  goTo(2);
+}
+
+/* MODE */
+function toggleMode(){
+  document.body.classList.toggle('light');
+}
+
+/* NO BUTTON */
+const noBtn=document.getElementById('noBtn');
+function moveNo(){
+  noBtn.style.left=Math.random()*80+'vw';
+  noBtn.style.top=Math.random()*80+'vh';
+}
+noBtn.addEventListener('mouseover',moveNo);
+noBtn.addEventListener('touchstart',moveNo);
+
+/* HEART */
+document.addEventListener('mousemove',e=>heart(e.pageX,e.pageY));
+document.addEventListener('touchmove',e=>{
+  const t=e.touches[0];
+  heart(t.pageX,t.pageY);
+});
+function heart(x,y){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='💗';
+  h.style.left=x+'px';
+  h.style.top=y+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),1000);
+}
+
+/* CONFETTI */
+function confetti(){
+  for(let i=0;i<40;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.innerHTML='💖';
+    c.style.left=Math.random()*100+'vw';
+    c.style.top='-10px';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1500);
+  }
+}
+</script>
+
+</body>
+</html>
