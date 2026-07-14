@@ -1,329 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>For Dia</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<style>
-:root{
-  --bg-dark: radial-gradient(circle at top,#2b0030,#09010d 60%);
-  --bg-light: linear-gradient(135deg,#ffd1dc,#ffb6c1);
-  --text-dark:#fff;
-  --text-light:#222;
-}
+  <title>For You</title>
 
-/* RESET */
-*{
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
-  background:var(--bg-dark);
-  color:var(--text-dark);
-  overflow-x:hidden;
-  transition:.4s;
-}
-
-body.light{
-  background:var(--bg-light);
-  color:var(--text-light);
-}
-
-/* TOGGLE */
-.toggle{
-  position:fixed;
-  top:14px;
-  right:14px;
-  background:#ff4f81;
-  color:#fff;
-  border:none;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:.8rem;
-  cursor:pointer;
-  z-index:100;
-}
-
-/* PAGE */
-.page{
-  display:none;
-  min-height:100vh;
-  padding:24px;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  flex-direction:column;
-}
-
-.page.active{
-  display:flex;
-  animation:fadeUp .6s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.page > *{
-  margin-bottom:14px;
-}
-
-h1{
-  font-size:2rem;
-  font-weight:600;
-  line-height:1.3;
-}
-
-p{
-  max-width:420px;
-  line-height:1.7;
-  opacity:.9;
-}
-
-/* BUTTON */
-button{
-  padding:14px 32px;
-  border-radius:30px;
-  border:none;
-  font-size:1rem;
-  cursor:pointer;
-  transition:.15s;
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-.yes{
-  background:#ff4f81;
-  color:#fff;
-  box-shadow:0 0 25px rgba(255,79,129,.6);
-}
-
-.yes:hover{
-  box-shadow:0 0 35px rgba(255,79,129,.8);
-}
-
-.no{
-  background:#fff;
-  color:#ff4f81;
-  position:absolute;
-  font-weight:500;
-}
-
-/* INPUT */
-input,select{
-  padding:12px;
-  border-radius:15px;
-  border:none;
-  width:240px;
-  font-size:.95rem;
-  outline:none;
-}
-
-/* STORY PAGE */
-.story-text{
-  max-width:420px;
-  font-size:1rem;
-  line-height:1.8;
-  opacity:.9;
-}
-
-.story-sign{
-  margin-top:4px;
-  font-weight:500;
-  opacity:.8;
-}
-
-/* DESKTOP */
-@media(min-width:768px){
-  h1{font-size:2.6rem}
-}
-
-/* HEART */
-.heart{
-  position:fixed;
-  font-size:18px;
-  pointer-events:none;
-  animation:fade 1s linear forwards;
-}
-
-@keyframes fade{
-  to{opacity:0;transform:translateY(-30px) scale(1.8)}
-}
-
-/* CONFETTI */
-.confetti{
-  position:fixed;
-  font-size:20px;
-  animation:conf 1.5s linear forwards;
-}
-
-@keyframes conf{
-  to{transform:translateY(120vh) rotate(360deg);opacity:0}
-}
-</style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 
 <body>
 
-<button class="toggle" onclick="toggleMode()">🌙 / ☀️</button>
+  <!-- =========================
+       TOPBAR
+  ========================== -->
 
-<!-- MUSIC -->
-<audio id="music" loop>
-  <source src="about-you.mp3" type="audio/mpeg">
-</audio>
+  <header class="topbar">
 
-<!-- PAGE 1 -->
-<div class="page active" id="page1">
-  <h1 id="type1"></h1>
-  <p id="type2"></p>
-  <button class="yes" onclick="yesAction()">Yes 💖</button>
-  <button class="no" id="noBtn">No</button>
-</div>
+    <p class="brand">
+      FOR YOU
+    </p>
 
-<!-- PAGE 2 -->
-<div class="page" id="page2">
-  <h1>Choose Our Moment ✨</h1>
-  <input type="date">
-  <select>
-    <option>Late Night Walk 🌙</option>
-    <option>Movie Night 🎬</option>
-    <option>Deep Talk ☕</option>
-  </select>
-  <button class="yes" onclick="goTo(3)">Continue</button>
-</div>
+    <div class="topbar-right">
 
-<!-- PAGE 3 -->
-<div class="page" id="page3">
-  <h1>Our Story Begins 💫</h1>
+      <p class="progress">
+        <span id="currentScene">01</span>
+        <span>/</span>
+        <span>06</span>
+      </p>
 
-  <p class="story-text">
-    It’s not about perfect moments,<br>
-    or grand promises.<br><br>
+      <button
+        class="music-button"
+        id="musicButton"
+        type="button"
+        aria-label="Toggle music"
+      >
+        ♪
+      </button>
 
-    It’s about choosing each other,<br>
-    even on the ordinary days.
-  </p>
+    </div>
 
-  <p class="story-sign">Kamu</p>
+  </header>
 
-  <button class="yes" onclick="goTo(4)">Finish</button>
-</div>
 
-<!-- PAGE 4 -->
-<div class="page" id="page4">
-  <h1 id="typeEnd"></h1>
-  <p id="typeEnd2"></p>
-  <p><b> Kamu</b></p>
-</div>
+  <!-- =========================
+       MAIN EXPERIENCE
+  ========================== -->
 
-<script>
-/* TYPEWRITER */
-function typeText(el,text,delay=40){
-  let i=0;
-  el.innerHTML="";
-  const interval=setInterval(()=>{
-    el.innerHTML+=text[i];
-    i++;
-    if(i>=text.length) clearInterval(interval);
-  },delay);
-}
+  <main class="experience">
 
-/* INIT */
-typeText(
-  document.getElementById('type1'),
-  "Dia, will you be my girlfriend?"
-);
-setTimeout(()=>{
-  typeText(
-    document.getElementById('type2'),
-    "From Kamu someone who wants to stay."
-  );
-},900);
 
-/* NAV */
-function goTo(n){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page'+n).classList.add('active');
+    <!-- =========================
+         SCENE 1 — OPENING
+    ========================== -->
 
-  if(n===4){
-    typeText(
-      document.getElementById('typeEnd'),
-      "One last thing 🤍"
-    );
-    setTimeout(()=>{
-      typeText(
-        document.getElementById('typeEnd2'),
-        "If you’re reading this, it means you chose us.\n\nAnd from this moment on,\nI choose you every day.",
-        35
-      );
-    },800);
-  }
-}
+    <section
+      class="scene active"
+      id="scene1"
+      data-scene="1"
+    >
 
-/* YES */
-let confettiDone=false;
-function yesAction(){
-  document.getElementById('music').play();
-  if(!confettiDone){
-    confetti();
-    confettiDone=true;
-  }
-  goTo(2);
-}
+      <div class="scene-content">
 
-/* MODE */
-function toggleMode(){
-  document.body.classList.toggle('light');
-}
+        <p class="eyebrow">
+          FOR ONE PERSON ONLY
+        </p>
 
-/* NO BUTTON */
-const noBtn=document.getElementById('noBtn');
-function moveNo(){
-  noBtn.style.left=Math.random()*80+'vw';
-  noBtn.style.top=Math.random()*80+'vh';
-}
-noBtn.addEventListener('mouseover',moveNo);
-noBtn.addEventListener('touchstart',moveNo);
+        <h1>
+          I made something
+          <span>for you.</span>
+        </h1>
 
-/* HEART */
-document.addEventListener('mousemove',e=>heart(e.pageX,e.pageY));
-document.addEventListener('touchmove',e=>{
-  const t=e.touches[0];
-  heart(t.pageX,t.pageY);
-});
-function heart(x,y){
-  const h=document.createElement('div');
-  h.className='heart';
-  h.innerHTML='💗';
-  h.style.left=x+'px';
-  h.style.top=y+'px';
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),1000);
-}
+        <p class="description">
+          No rush.
+          <br>
+          Take your time.
+        </p>
 
-/* CONFETTI */
-function confetti(){
-  for(let i=0;i<40;i++){
-    const c=document.createElement('div');
-    c.className='confetti';
-    c.innerHTML='💖';
-    c.style.left=Math.random()*100+'vw';
-    c.style.top='-10px';
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),1500);
-  }
-}
-</script>
+        <button
+          class="primary-button"
+          type="button"
+          data-next="2"
+        >
+          Open
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCENE 2 — MESSAGE
+    ========================== -->
+
+    <section
+      class="scene"
+      id="scene2"
+      data-scene="2"
+    >
+
+      <div class="scene-content">
+
+        <p class="eyebrow">
+          A LITTLE NOTE
+        </p>
+
+        <h2>
+          Somewhere between
+          <span>all the ordinary days,</span>
+        </h2>
+
+        <p class="description">
+          You became someone
+          I didn't want to lose.
+        </p>
+
+        <button
+          class="primary-button"
+          type="button"
+          data-next="3"
+        >
+          Continue
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCENE 3 — MEMORIES
+    ========================== -->
+
+    <section
+      class="scene"
+      id="scene3"
+      data-scene="3"
+    >
+
+      <div class="scene-content scene-content-wide">
+
+        <p class="eyebrow">
+          OUR LITTLE TIMELINE
+        </p>
+
+        <h2>
+          A few moments
+          <span>I still remember.</span>
+        </h2>
+
+
+        <div class="memory-grid">
+
+
+          <!-- MEMORY 1 -->
+
+          <article class="memory-card">
+
+            <div class="memory-image">
+              <img
+                src="assets/images/memory-1.jpg"
+                alt="Our first memory"
+              >
+            </div>
+
+            <p class="memory-number">
+              01
+            </p>
+
+            <h3>
+              The first time we talked
+            </h3>
+
+            <p>
+              A small moment that somehow
+              became important to me.
+            </p>
+
+          </article>
+
+
+          <!-- MEMORY 2 -->
+
+          <article class="memory-card">
+
+            <div class="memory-image">
+              <img
+                src="assets/images/memory-2.jpg"
+                alt="A special memory"
+              >
+            </div>
+
+            <p class="memory-number">
+              02
+            </p>
+
+            <h3>
+              The moment I realized
+            </h3>
+
+            <p>
+              Maybe this was the moment
+              everything started to feel different.
+            </p>
+
+          </article>
+
+
+          <!-- MEMORY 3 -->
+
+          <article class="memory-card">
+
+            <div class="memory-image">
+              <img
+                src="assets/images/memory-3.jpg"
+                alt="My favorite memory"
+              >
+            </div>
+
+            <p class="memory-number">
+              03
+            </p>
+
+            <h3>
+              My favorite memory
+            </h3>
+
+            <p>
+              One of those moments
+              I wish I could experience twice.
+            </p>
+
+          </article>
+
+        </div>
+
+
+        <button
+          class="primary-button"
+          type="button"
+          data-next="4"
+        >
+          There's one more thing
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCENE 4 — QUESTION
+    ========================== -->
+
+    <section
+      class="scene"
+      id="scene4"
+      data-scene="4"
+    >
+
+      <div class="scene-content">
+
+        <p class="eyebrow">
+          THE QUESTION
+        </p>
+
+        <h2>
+          There's one thing
+          <span>I've been wanting to ask you.</span>
+        </h2>
+
+        <p class="question">
+          Dia,
+          <br>
+          will you be my girlfriend?
+        </p>
+
+
+        <div class="button-group">
+
+          <button
+            class="primary-button"
+            id="yesButton"
+            type="button"
+          >
+            Yes, I will
+          </button>
+
+          <button
+            class="secondary-button"
+            id="notYetButton"
+            type="button"
+          >
+            Not yet
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCENE 5 — CHOOSE MOMENT
+    ========================== -->
+
+    <section
+      class="scene"
+      id="scene5"
+      data-scene="5"
+    >
+
+      <div class="scene-content">
+
+        <p class="eyebrow">
+          ONE MORE THING
+        </p>
+
+        <h2>
+          Choose our
+          <span>first plan.</span>
+        </h2>
+
+
+        <div class="moment-options">
+
+
+          <button
+            class="moment-option"
+            type="button"
+            data-moment="Late Night Walk"
+          >
+
+            <span class="moment-number">
+              01
+            </span>
+
+            <span>
+              Late Night Walk
+            </span>
+
+          </button>
+
+
+          <button
+            class="moment-option"
+            type="button"
+            data-moment="Movie Night"
+          >
+
+            <span class="moment-number">
+              02
+            </span>
+
+            <span>
+              Movie Night
+            </span>
+
+          </button>
+
+
+          <button
+            class="moment-option"
+            type="button"
+            data-moment="Deep Talk Over Coffee"
+          >
+
+            <span class="moment-number">
+              03
+            </span>
+
+            <span>
+              Deep Talk Over Coffee
+            </span>
+
+          </button>
+
+
+        </div>
+
+
+        <div class="date-field">
+
+          <label for="momentDate">
+            Pick a date
+          </label>
+
+          <input
+            type="date"
+            id="momentDate"
+          >
+
+        </div>
+
+
+        <button
+          class="primary-button"
+          id="finishButton"
+          type="button"
+        >
+          Continue
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCENE 6 — FINAL
+    ========================== -->
+
+    <section
+      class="scene"
+      id="scene6"
+      data-scene="6"
+    >
+
+      <div class="scene-content">
+
+        <p class="eyebrow">
+          THE BEGINNING OF US
+        </p>
+
+        <h2>
+          So this is where
+          <span>our next chapter begins.</span>
+        </h2>
+
+
+        <div class="final-memory">
+
+          <p
+            class="final-date"
+            id="finalDate"
+          >
+            Our date
+          </p>
+
+          <p
+            class="final-moment"
+            id="finalMoment"
+          >
+            Our first plan
+          </p>
+
+        </div>
+
+
+        <p class="description">
+          I'll remember this one.
+        </p>
+
+        <p class="signature">
+          — Kamu
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       BACKGROUND
+  ========================== -->
+
+  <div class="ambient-glow glow-one"></div>
+
+  <div class="ambient-glow glow-two"></div>
+
+  <div class="grain"></div>
+
+
+  <!-- =========================
+       MUSIC
+  ========================== -->
+
+  <audio
+    id="backgroundMusic"
+    loop
+    preload="auto"
+  >
+
+    <source
+      src="assets/music/about-you.mp3"
+      type="audio/mpeg"
+    >
+
+  </audio>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script src="js/script.js"></script>
 
 </body>
+
 </html>
