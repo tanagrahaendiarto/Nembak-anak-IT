@@ -45,13 +45,15 @@ const finalDate =
 const finalMoment =
   document.getElementById("finalMoment");
 
+const nextButtons =
+  document.querySelectorAll("[data-next]");
+
 
 // =========================
 // SCENE NAVIGATION
 // =========================
 
 function goToScene(sceneNumber) {
-
   const currentScene =
     document.querySelector(".scene.active");
 
@@ -60,37 +62,32 @@ function goToScene(sceneNumber) {
       `scene${sceneNumber}`
     );
 
-
   if (!currentScene || !nextScene) {
     return;
   }
 
+  // Prevent opening the same scene
+  if (currentScene === nextScene) {
+    return;
+  }
 
   currentScene.classList.add("leaving");
 
-
   setTimeout(() => {
-
     currentScene.classList.remove(
       "active",
       "leaving"
     );
 
-
     nextScene.classList.add("active");
-
 
     experience.currentScene =
       sceneNumber;
 
-
     updateProgress();
 
-
     nextScene.scrollTop = 0;
-
   }, 450);
-
 }
 
 
@@ -99,12 +96,10 @@ function goToScene(sceneNumber) {
 // =========================
 
 function updateProgress() {
-
   currentSceneText.textContent =
     String(
       experience.currentScene
     ).padStart(2, "0");
-
 }
 
 
@@ -112,33 +107,27 @@ function updateProgress() {
 // NEXT BUTTONS
 // =========================
 
-const nextButtons =
-  document.querySelectorAll("[data-next]");
-
-
 nextButtons.forEach((button) => {
-
   button.addEventListener(
     "click",
     () => {
-
       const nextScene =
         Number(
           button.dataset.next
         );
 
-
-      // Start music after first user interaction
-      if (experience.currentScene === 1) {
+      // Browser hanya mengizinkan audio
+      // dimulai setelah interaksi pengguna.
+      if (
+        experience.currentScene === 1 &&
+        music.paused
+      ) {
         startMusic();
       }
 
-
       goToScene(nextScene);
-
     }
   );
-
 });
 
 
@@ -147,135 +136,216 @@ nextButtons.forEach((button) => {
 // =========================
 
 function startMusic() {
-
   music.volume = 0;
-
 
   const playPromise =
     music.play();
 
-
   if (playPromise !== undefined) {
-
     playPromise
       .then(() => {
-
-        experience.musicPlaying = true;
-
+        experience.musicPlaying =
+          true;
 
         musicButton.classList.add(
           "playing"
         );
 
-
         fadeMusicIn();
-
       })
-      .catch((error) => {
 
+      .catch((error) => {
         console.log(
-          "Music could not autoplay:",
+          "Music could not play:",
           error
         );
 
+        experience.musicPlaying =
+          false;
 
-        experience.musicPlaying = false;
-
+        musicButton.classList.remove(
+          "playing"
+        );
       });
-
   }
-
 }
 
 
+// =========================
+// MUSIC FADE IN
+// =========================
+
 function fadeMusicIn() {
+  const targetVolume = 0.35;
 
   const fadeInterval =
     setInterval(() => {
-
-      if (music.volume < 0.35) {
-
+      if (
+        music.volume <
+        targetVolume
+      ) {
         music.volume =
           Math.min(
             music.volume + 0.02,
-            0.35
+            targetVolume
           );
-
       } else {
-
         clearInterval(
           fadeInterval
         );
-
       }
-
     }, 100);
-
 }
 
 
-// Music button
+// =========================
+// MUSIC BUTTON
+// =========================
 
 musicButton.addEventListener(
   "click",
-  () => {
+  async () => {
+    try {
+      if (music.paused) {
+        await music.play();
 
-    if (music.paused) {
+        // Kalau musik pertama kali
+        // dinyalakan lewat tombol.
+        if (music.volume === 0) {
+          music.volume = 0.35;
+        }
 
-      music.play();
+        experience.musicPlaying =
+          true;
 
+        musicButton.classList.add(
+          "playing"
+        );
+      } else {
+        music.pause();
 
-      experience.musicPlaying =
-        true;
+        experience.musicPlaying =
+          false;
 
-
-      musicButton.classList.add(
-        "playing"
+        musicButton.classList.remove(
+          "playing"
+        );
+      }
+    } catch (error) {
+      console.log(
+        "Music toggle failed:",
+        error
       );
-
-    } else {
-
-      music.pause();
-
-
-      experience.musicPlaying =
-        false;
-
-
-      musicButton.classList.remove(
-        "playing"
-      );
-
     }
-
   }
 );
 
 
 // =========================
-// QUESTION
+// QUESTION — YES
 // =========================
 
 yesButton.addEventListener(
   "click",
   () => {
-
-    experience.accepted = true;
-
+    experience.accepted =
+      true;
 
     goToScene(5);
-
   }
 );
 
 
+// =========================
+// RUNAWAY "NOT YET" BUTTON
+// =========================
+
+function moveNotYetButton() {
+  const buttonWidth =
+    notYetButton.offsetWidth;
+
+  const buttonHeight =
+    notYetButton.offsetHeight;
+
+  const padding = 20;
+
+  const maxX =
+    window.innerWidth -
+    buttonWidth -
+    padding;
+
+  const maxY =
+    window.innerHeight -
+    buttonHeight -
+    padding;
+
+  const randomX =
+    Math.floor(
+      Math.random() *
+      Math.max(
+        maxX - padding,
+        1
+      )
+    ) + padding;
+
+  const randomY =
+    Math.floor(
+      Math.random() *
+      Math.max(
+        maxY - padding,
+        1
+      )
+    ) + padding;
+
+  notYetButton.style.position =
+    "fixed";
+
+  notYetButton.style.left =
+    `${randomX}px`;
+
+  notYetButton.style.top =
+    `${randomY}px`;
+
+  notYetButton.style.margin =
+    "0";
+
+  notYetButton.style.zIndex =
+    "999";
+}
+
+
+// Desktop:
+// Kabur ketika cursor masuk.
+notYetButton.addEventListener(
+  "mouseenter",
+  moveNotYetButton
+);
+
+
+// Mobile:
+// Kabur ketika disentuh.
+notYetButton.addEventListener(
+  "touchstart",
+  (event) => {
+    event.preventDefault();
+
+    moveNotYetButton();
+  },
+  {
+    passive: false,
+  }
+);
+
+
+// Pengaman:
+// Kalau berhasil diklik,
+// tetap tidak menjalankan apa pun.
 notYetButton.addEventListener(
   "click",
-  () => {
+  (event) => {
+    event.preventDefault();
 
-    notYetButton.textContent =
-      "Take your time";
-
+    moveNotYetButton();
   }
 );
 
@@ -286,36 +356,28 @@ notYetButton.addEventListener(
 
 momentOptions.forEach(
   (option) => {
-
     option.addEventListener(
       "click",
       () => {
-
-        // Remove selected state
+        // Hapus pilihan sebelumnya
         momentOptions.forEach(
           (item) => {
-
             item.classList.remove(
               "selected"
             );
-
           }
         );
 
-
-        // Add selected state
+        // Tandai pilihan baru
         option.classList.add(
           "selected"
         );
 
-
-        // Save selection
+        // Simpan pilihan
         experience.selectedMoment =
           option.dataset.moment;
-
       }
     );
-
   }
 );
 
@@ -327,43 +389,35 @@ momentOptions.forEach(
 finishButton.addEventListener(
   "click",
   () => {
-
-    // Check moment
-    if (!experience.selectedMoment) {
-
+    // Harus memilih aktivitas
+    if (
+      !experience.selectedMoment
+    ) {
       alert(
         "Choose our first plan first."
       );
 
       return;
-
     }
 
-
-    // Check date
+    // Harus memilih tanggal
     if (!momentDate.value) {
-
       alert(
         "Pick a date first."
       );
 
       return;
-
     }
 
-
-    // Save date
+    // Simpan tanggal
     experience.selectedDate =
       momentDate.value;
 
-
-    // Prepare final content
+    // Siapkan ending
     prepareFinalScene();
 
-
-    // Go to final scene
+    // Pindah ke scene terakhir
     goToScene(6);
-
   }
 );
 
@@ -373,13 +427,10 @@ finishButton.addEventListener(
 // =========================
 
 function prepareFinalScene() {
-
   const selectedDate =
     new Date(
-      experience.selectedDate
-      + "T00:00:00"
+      `${experience.selectedDate}T00:00:00`
     );
-
 
   const formattedDate =
     selectedDate.toLocaleDateString(
@@ -391,12 +442,16 @@ function prepareFinalScene() {
       }
     );
 
-
   finalDate.textContent =
     formattedDate;
 
-
   finalMoment.textContent =
     experience.selectedMoment;
-
 }
+
+
+// =========================
+// INITIALIZE
+// =========================
+
+updateProgress();

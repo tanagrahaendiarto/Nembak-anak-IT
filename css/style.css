@@ -1,11 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap");
 
+
 /* =========================
    DESIGN SYSTEM
 ========================= */
 
 :root {
   --bg: #090709;
+
   --surface: rgba(255, 255, 255, 0.045);
   --surface-hover: rgba(255, 255, 255, 0.075);
 
@@ -23,7 +25,8 @@
   --container: 1180px;
 
   --transition-fast: 200ms ease;
-  --transition-scene: 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-scene:
+    500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
@@ -34,6 +37,7 @@
 * {
   margin: 0;
   padding: 0;
+
   box-sizing: border-box;
 }
 
@@ -58,6 +62,7 @@ body {
     var(--bg);
 
   color: var(--text);
+
   font-family: var(--font-body);
 
   overflow: hidden;
@@ -70,6 +75,7 @@ input {
 
 button {
   border: none;
+
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -80,6 +86,7 @@ button {
 
 .topbar {
   position: fixed;
+
   top: 0;
   left: 0;
 
@@ -106,14 +113,17 @@ button {
 .topbar-right {
   display: flex;
   align-items: center;
+
   gap: 22px;
 }
 
 .progress {
   display: flex;
+
   gap: 6px;
 
   font-size: 0.72rem;
+
   letter-spacing: 0.12em;
 
   color: var(--text-muted);
@@ -138,7 +148,8 @@ button {
   border: 1px solid var(--border);
   border-radius: 50%;
 
-  background: rgba(255, 255, 255, 0.03);
+  background:
+    rgba(255, 255, 255, 0.03);
 
   color: var(--text);
 
@@ -152,17 +163,23 @@ button {
 }
 
 .music-button:hover {
-  background: var(--surface-hover);
-  border-color: rgba(255, 255, 255, 0.2);
+  background:
+    var(--surface-hover);
 
-  transform: scale(1.05);
+  border-color:
+    rgba(255, 255, 255, 0.2);
+
+  transform:
+    scale(1.05);
 }
 
 .music-button.playing {
-  border-color: rgba(201, 107, 134, 0.5);
+  border-color:
+    rgba(201, 107, 134, 0.5);
 
   box-shadow:
-    0 0 25px rgba(201, 107, 134, 0.2);
+    0 0 25px
+    rgba(201, 107, 134, 0.2);
 }
 
 
@@ -186,11 +203,15 @@ button {
 
 .scene {
   position: absolute;
+
   inset: 0;
 
   min-height: 100vh;
 
-  padding: 110px 24px 70px;
+  padding:
+    110px
+    24px
+    70px;
 
   display: flex;
   align-items: center;
@@ -234,7 +255,7 @@ button {
 
 
 /* =========================
-   CONTENT
+   SCENE CONTENT
 ========================= */
 
 .scene-content {
@@ -277,34 +298,38 @@ h2 {
   font-weight: 500;
 
   letter-spacing: -0.035em;
+
   line-height: 1.05;
 }
 
 h1 {
   max-width: 720px;
 
-  font-size: clamp(
-    3.4rem,
-    8vw,
-    7.5rem
-  );
+  font-size:
+    clamp(
+      3.4rem,
+      8vw,
+      7.5rem
+    );
 }
 
 h2 {
   max-width: 760px;
 
-  font-size: clamp(
-    2.7rem,
-    6vw,
-    5.5rem
-  );
+  font-size:
+    clamp(
+      2.7rem,
+      6vw,
+      5.5rem
+    );
 }
 
 h1 span,
 h2 span {
   display: block;
 
-  color: var(--accent-light);
+  color:
+    var(--accent-light);
 
   font-style: italic;
 }
@@ -315,6 +340,7 @@ h2 span {
   margin-top: 30px;
 
   font-size: 1rem;
+
   line-height: 1.8;
 
   color: var(--text-muted);
@@ -330,7 +356,10 @@ h2 span {
   min-width: 150px;
 
   margin-top: 38px;
-  padding: 15px 28px;
+
+  padding:
+    15px
+    28px;
 
   border-radius: 999px;
 
@@ -349,37 +378,48 @@ h2 span {
 
 .primary-button {
   background: var(--text);
+
   color: var(--bg);
 }
 
 .primary-button:hover {
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 12px 40px rgba(255, 255, 255, 0.12);
+    0 12px 40px
+    rgba(255, 255, 255, 0.12);
 }
 
 .secondary-button {
-  border: 1px solid var(--border);
+  border:
+    1px solid
+    var(--border);
 
-  background: transparent;
+  background:
+    transparent;
 
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 }
 
 .secondary-button:hover {
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color:
+    rgba(255, 255, 255, 0.25);
 
-  color: var(--text);
+  color:
+    var(--text);
 }
 
 .primary-button:active,
 .secondary-button:active {
-  transform: scale(0.97);
+  transform:
+    scale(0.97);
 }
 
 .button-group {
   display: flex;
+
   justify-content: center;
 
   gap: 12px;
@@ -406,12 +446,19 @@ h2 span {
 }
 
 .memory-card {
-  padding: 14px 14px 24px;
+  padding:
+    14px
+    14px
+    24px;
 
-  border: 1px solid var(--border);
+  border:
+    1px solid
+    var(--border);
+
   border-radius: 22px;
 
-  background: var(--surface);
+  background:
+    var(--surface);
 
   text-align: left;
 
@@ -422,11 +469,14 @@ h2 span {
 }
 
 .memory-card:hover {
-  transform: translateY(-8px);
+  transform:
+    translateY(-8px);
 
-  background: var(--surface-hover);
+  background:
+    var(--surface-hover);
 
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color:
+    rgba(255, 255, 255, 0.18);
 }
 
 .memory-image {
@@ -440,13 +490,15 @@ h2 span {
 
   overflow: hidden;
 
-  background: #151015;
+  background:
+    #151015;
 }
 
 .memory-image::after {
   content: "";
 
   position: absolute;
+
   inset: 0;
 
   background:
@@ -455,6 +507,8 @@ h2 span {
       rgba(9, 7, 9, 0.25),
       transparent 50%
     );
+
+  pointer-events: none;
 }
 
 .memory-image img {
@@ -466,12 +520,15 @@ h2 span {
   object-fit: cover;
 
   transition:
-    transform 700ms
+    transform
+    700ms
     cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.memory-card:hover img {
-  transform: scale(1.04);
+.memory-card:hover
+.memory-image img {
+  transform:
+    scale(1.04);
 }
 
 .memory-number {
@@ -481,15 +538,18 @@ h2 span {
 
   letter-spacing: 0.18em;
 
-  color: var(--accent-light);
+  color:
+    var(--accent-light);
 }
 
 .memory-card h3 {
   margin-top: 10px;
 
-  font-family: var(--font-display);
+  font-family:
+    var(--font-display);
 
   font-size: 1.45rem;
+
   font-weight: 500;
 }
 
@@ -497,9 +557,11 @@ h2 span {
   margin-top: 10px;
 
   font-size: 0.82rem;
+
   line-height: 1.7;
 
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 }
 
 
@@ -510,15 +572,36 @@ h2 span {
 .question {
   margin-top: 45px;
 
-  font-family: var(--font-display);
+  font-family:
+    var(--font-display);
 
-  font-size: clamp(
-    1.8rem,
-    4vw,
-    3rem
-  );
+  font-size:
+    clamp(
+      1.8rem,
+      4vw,
+      3rem
+    );
 
   line-height: 1.4;
+}
+
+
+/* =========================
+   RUNAWAY NOT YET BUTTON
+========================= */
+
+#notYetButton {
+  transition:
+    left 180ms ease,
+    top 180ms ease,
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+#notYetButton:hover {
+  transform:
+    rotate(-3deg);
 }
 
 
@@ -541,19 +624,26 @@ h2 span {
 .moment-option {
   width: 100%;
 
-  padding: 20px 22px;
+  padding:
+    20px
+    22px;
 
   display: flex;
   align-items: center;
 
   gap: 20px;
 
-  border: 1px solid var(--border);
+  border:
+    1px solid
+    var(--border);
+
   border-radius: 16px;
 
-  background: var(--surface);
+  background:
+    var(--surface);
 
-  color: var(--text);
+  color:
+    var(--text);
 
   text-align: left;
 
@@ -567,11 +657,14 @@ h2 span {
 }
 
 .moment-option:hover {
-  transform: translateX(5px);
+  transform:
+    translateX(5px);
 
-  background: var(--surface-hover);
+  background:
+    var(--surface-hover);
 
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color:
+    rgba(255, 255, 255, 0.2);
 }
 
 .moment-option.selected {
@@ -591,12 +684,13 @@ h2 span {
 
   letter-spacing: 0.15em;
 
-  color: var(--accent-light);
+  color:
+    var(--accent-light);
 }
 
 
 /* =========================
-   DATE
+   DATE FIELD
 ========================= */
 
 .date-field {
@@ -618,20 +712,28 @@ h2 span {
 
   letter-spacing: 0.1em;
 
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 }
 
 .date-field input {
   width: 100%;
 
-  padding: 17px 18px;
+  padding:
+    17px
+    18px;
 
-  border: 1px solid var(--border);
+  border:
+    1px solid
+    var(--border);
+
   border-radius: 14px;
 
-  background: var(--surface);
+  background:
+    var(--surface);
 
-  color: var(--text);
+  color:
+    var(--text);
 
   outline: none;
 
@@ -652,16 +754,23 @@ h2 span {
 
 
 /* =========================
-   FINAL
+   FINAL SCENE
 ========================= */
 
 .final-memory {
   margin-top: 45px;
 
-  padding: 28px 45px;
+  padding:
+    28px
+    45px;
 
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top:
+    1px solid
+    var(--border);
+
+  border-bottom:
+    1px solid
+    var(--border);
 }
 
 .final-date {
@@ -671,32 +780,39 @@ h2 span {
 
   text-transform: uppercase;
 
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 }
 
 .final-moment {
   margin-top: 10px;
 
-  font-family: var(--font-display);
+  font-family:
+    var(--font-display);
 
-  font-size: clamp(
-    1.8rem,
-    4vw,
-    2.8rem
-  );
+  font-size:
+    clamp(
+      1.8rem,
+      4vw,
+      2.8rem
+    );
 
-  color: var(--accent-light);
+  color:
+    var(--accent-light);
 }
 
 .signature {
   margin-top: 30px;
 
-  font-family: var(--font-display);
+  font-family:
+    var(--font-display);
 
   font-size: 1.4rem;
+
   font-style: italic;
 
-  color: var(--text-muted);
+  color:
+    var(--text-muted);
 }
 
 
@@ -712,7 +828,8 @@ h2 span {
 
   border-radius: 50%;
 
-  filter: blur(120px);
+  filter:
+    blur(120px);
 
   pointer-events: none;
 
@@ -725,14 +842,16 @@ h2 span {
   top: -250px;
   left: -180px;
 
-  background: #8c2949;
+  background:
+    #8c2949;
 }
 
 .glow-two {
   right: -250px;
   bottom: -250px;
 
-  background: #6f274f;
+  background:
+    #6f274f;
 }
 
 
@@ -759,17 +878,15 @@ h2 span {
 
 
 /* =========================
-   RESPONSIVE
+   TABLET
 ========================= */
 
 @media (max-width: 900px) {
 
-  body {
-    overflow: auto;
-  }
-
   .topbar {
-    padding: 22px 20px;
+    padding:
+      22px
+      20px;
   }
 
   .scene {
@@ -780,62 +897,122 @@ h2 span {
   }
 
   .memory-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
     max-width: 420px;
   }
 
   .memory-image {
-    aspect-ratio: 16 / 12;
+    aspect-ratio:
+      16 / 12;
   }
 
 }
 
 
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 600px) {
 
+  .topbar {
+    padding:
+      20px
+      18px;
+  }
+
   h1 {
-    font-size: clamp(
-      3rem,
-      15vw,
-      4.5rem
-    );
+    font-size:
+      clamp(
+        3rem,
+        15vw,
+        4.5rem
+      );
   }
 
   h2 {
-    font-size: clamp(
-      2.5rem,
-      12vw,
-      4rem
-    );
+    font-size:
+      clamp(
+        2.5rem,
+        12vw,
+        4rem
+      );
   }
 
   .brand {
-    font-size: 0.62rem;
+    font-size:
+      0.62rem;
   }
 
   .progress {
-    display: none;
+    display:
+      none;
   }
 
   .description {
-    font-size: 0.9rem;
+    font-size:
+      0.9rem;
+  }
+
+  .scene {
+    padding:
+      90px
+      18px
+      50px;
   }
 
   .button-group {
-    width: 100%;
+    width:
+      100%;
 
-    flex-direction: column;
+    flex-direction:
+      column;
   }
 
   .button-group button {
-    width: 100%;
+    width:
+      100%;
+  }
+
+  .moment-options,
+  .date-field {
+    max-width:
+      100%;
   }
 
   .final-memory {
-    width: 100%;
+    width:
+      100%;
 
-    padding: 24px 20px;
+    padding:
+      24px
+      20px;
+  }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
   }
 
 }
